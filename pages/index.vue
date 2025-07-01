@@ -1,15 +1,12 @@
-<template>
-  <div ref="container" class="w-screen h-screen" />
-</template>
-
 <script setup lang="ts">
-import Sigma from 'sigma'
 import Graph from 'graphology'
+import Sigma from 'sigma'
 
 const container = ref<HTMLDivElement | null>(null)
 
 onMounted(() => {
-  if (!container.value) return
+  if (!container.value)
+    return
 
   const graph = new Graph()
   graph.addNode('n1', { label: 'Node 1', x: 0, y: 0, size: 10, color: '#f66' })
@@ -19,3 +16,7 @@ onMounted(() => {
   new Sigma(graph, container.value)
 })
 </script>
+
+<template>
+  <div ref="container" class="w-screen h-screen" />
+</template>
