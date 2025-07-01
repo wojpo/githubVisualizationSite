@@ -15,5 +15,5 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     githubApiKey: process.env.GITHUB_API_KEY,
-  }
+  },
 })
