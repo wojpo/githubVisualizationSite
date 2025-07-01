@@ -1,10 +1,6 @@
 export default defineEventHandler(async (event) => {
     const { username } = event.context.params as { username: string }
 
-    if (!username) {
-        return { error: 'Brak nazwy użytkownika w adresie URL.' }
-    }
-
     const query = `
     query {
       user(login: "${username}") {
