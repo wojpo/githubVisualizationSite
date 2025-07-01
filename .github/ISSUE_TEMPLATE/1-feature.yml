@@ -1,6 +1,6 @@
 name: ✨ Feature
 description: Suggest a feature or improvement!
-title: "[Feat]: "
+title: '[Feat]: '
 body:
   - type: textarea
     id: howitworks

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Graph from 'graphology'
 import Sigma from 'sigma'
+import { onMounted, ref } from 'vue'
 
 const container = ref<HTMLDivElement | null>(null)
 
-onMounted(() => {
+onMounted(async () => {
   if (!container.value)
     return
 
@@ -14,6 +15,26 @@ onMounted(() => {
   graph.addEdge('n1', 'n2')
 
   new Sigma(graph, container.value)
+
+  async function useGit() {
+    const query = `
+      query ($login: String!) {
+        user(login: $login) {
+          login
+          name
+          avatarUrl
+        }
+      }
+    `
+    const variables = { login: 'octocat' }
+
+    const data = await $fetch('/api/github-ql', {
+      method: 'POST',
+      body: { query, variables },
+    })
+  }
+
+  await useGit()
 })
 </script>
 

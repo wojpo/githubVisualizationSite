@@ -1,6 +1,6 @@
 name: 🧹 Refactor
 description: Refactor current code!
-title: "[Refactor]: "
+title: '[Refactor]: '
 body:
   - type: textarea
     id: whattochange
