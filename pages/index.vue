@@ -14,6 +14,7 @@ onMounted(() => {
   graph.addEdge('n1', 'n2')
 
   new Sigma(graph, container.value)
+
 })
 </script>
 
