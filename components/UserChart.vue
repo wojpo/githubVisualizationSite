@@ -65,7 +65,7 @@ onMounted(async () => {
         label: org.name || org.login,
         color: '#ff69b4',
         image: org.avatarUrl,
-        description: org.description || "No description",
+        description: org.description || 'No description',
         url: org.url,
       })
       graph.addEdge(`org${index}`, 'user', { color: '#ff69b4' })
@@ -77,12 +77,11 @@ onMounted(async () => {
         size: 15,
         label: repo.name,
         url: repo.url,
-        description: repo.description || "No description",
+        description: repo.description || 'No description',
         color: '#E76F51',
       })
-      graph.addEdge(`repo${index}`, 'user', { color: '#B29985' })
+      graph.addEdge(`repo${index}`, 'user', { color: '#b29985' })
     })
-
 
     // Sigma requires nodes to have initial x and y values to render properly. These will be replaced by the ForceAtlas2 layout afterward.
     graph.forEachNode((node) => {
@@ -101,7 +100,7 @@ onMounted(async () => {
 
     FA2Layout.assign(graph, {
       iterations: 200,
-      settings: layoutSettings
+      settings: layoutSettings,
     })
 
     const renderer = new Sigma(graph, container.value, {
