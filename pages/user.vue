@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface infoData {
   label: string
-  description: string
+  description?: string
   typename: string
-  url: string
+  url?: string
 }
 
 const info = ref<infoData | null>(null)

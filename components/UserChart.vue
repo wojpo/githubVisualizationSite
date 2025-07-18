@@ -127,8 +127,8 @@ onMounted(async () => {
       const description = graph.getNodeAttribute(node, 'description')
       const typename = graph.getNodeAttribute(node, '__typename')
       const url = graph.getNodeAttribute(node, 'url')
-      if (label && description && typename && url) {
-        emit('sendData', { label, description, typename, url })
+      if (label && typename) {
+        emit('sendData', { label, description: description || null, typename, url: url || null })
       }
     })
   }
