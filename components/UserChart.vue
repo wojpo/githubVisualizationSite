@@ -4,7 +4,7 @@ import Graph from 'graphology'
 import FA2Layout from 'graphology-layout-forceatlas2'
 import Sigma from 'sigma'
 
-const emit = defineEmits(['sendData'])
+const emit = defineEmits(['nodeInfoUpdate'])
 
 const container = ref(null)
 
@@ -128,7 +128,7 @@ onMounted(async () => {
       const typename = graph.getNodeAttribute(node, '__typename')
       const url = graph.getNodeAttribute(node, 'url')
       if (label && typename) {
-        emit('sendData', { label, description: description || null, typename, url: url || null })
+        emit('nodeInfoUpdate', { label, description: description || null, typename, url: url || null })
       }
     })
   }
