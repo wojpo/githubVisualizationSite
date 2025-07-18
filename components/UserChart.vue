@@ -4,6 +4,8 @@ import Graph from 'graphology'
 import FA2Layout from 'graphology-layout-forceatlas2'
 import Sigma from 'sigma'
 
+const emit = defineEmits(['nodeInfoUpdate'])
+
 const container = ref(null)
 
 onMounted(async () => {
@@ -52,10 +54,11 @@ onMounted(async () => {
     graph.addNode('user', {
       size: 30,
       label: user.name || user.login,
-      color: '#ff69b4',
+      color: '#E76F51',
       description: user.bio || 'No bio',
       image: user.avatarUrl,
       url: `https://github.com/${user.login}`,
+      __typename: 'User',
     })
 
     const orgs = user.organizations.nodes || []
@@ -63,12 +66,13 @@ onMounted(async () => {
       graph.addNode(`org${index}`, {
         size: 25,
         label: org.name || org.login,
-        color: '#ff69b4',
+        color: '#E76F51',
         image: org.avatarUrl,
         description: org.description || 'No description',
         url: org.url,
+        __typename: 'Organization',
       })
-      graph.addEdge(`org${index}`, 'user', { color: '#ff69b4' })
+      graph.addEdge(`org${index}`, 'user', { color: '#b29985' })
     })
 
     const repos = user.repositories.nodes || []
@@ -79,6 +83,7 @@ onMounted(async () => {
         url: repo.url,
         description: repo.description || 'No description',
         color: '#E76F51',
+        __typename: 'Repository',
       })
       graph.addEdge(`repo${index}`, 'user', { color: '#b29985' })
     })
@@ -115,6 +120,16 @@ onMounted(async () => {
       const url = graph.getNodeAttribute(node, 'url')
       if (url)
         window.open(url, '_blank')
+    })
+
+    renderer.on('enterNode', ({ node }) => {
+      const label = graph.getNodeAttribute(node, 'label')
+      const description = graph.getNodeAttribute(node, 'description')
+      const typename = graph.getNodeAttribute(node, '__typename')
+      const url = graph.getNodeAttribute(node, 'url')
+      if (label && typename) {
+        emit('nodeInfoUpdate', { label, description: description || null, typename, url: url || null })
+      }
     })
   }
 })
