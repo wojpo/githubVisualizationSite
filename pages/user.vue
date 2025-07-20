@@ -14,7 +14,10 @@ function updateNodeInfo(data: InfoData) {
 </script>
 
 <template>
-  <div class="flex h-screen">
+  <div
+    class="flex"
+    :style="{ height: 'calc(100vh - 67px)' }"
+  >
     <NodeInfoPanel :node-info="nodeInfo" />
     <UserChart class="w-3/4 h-full" @node-info-update="updateNodeInfo" />
   </div>
