@@ -10,3 +10,7 @@ body {
 @theme static {
   --font-inter: 'Inter', sans-serif;
 }
+
+@utility screen-navbar {
+  height: calc(100vh - 67px);
+}
