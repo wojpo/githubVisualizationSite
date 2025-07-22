@@ -1,6 +1,17 @@
-@import 'tailwindcss';
+@import 'tailwindcss' theme(static);
 @import '@nuxt/ui';
+@plugin "@tailwindcss/typography";
+@tailwind utilities;
 
 body {
   background-color: #fffaf0;
+}
+
+@theme static {
+  --font-inter: 'Inter', sans-serif;
+  --navbar-height: 67px;
+}
+
+@utility screen-navbar {
+  height: calc(100vh - var(--navbar-height));
 }
