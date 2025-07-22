@@ -9,8 +9,9 @@ body {
 
 @theme static {
   --font-inter: 'Inter', sans-serif;
+  --navbar-height: 67px;
 }
 
 @utility screen-navbar {
-  height: calc(100vh - 67px);
+  height: calc(100vh - var(--navbar-height));
 }
