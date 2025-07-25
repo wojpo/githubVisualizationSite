@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { NodeImageProgram } from '@sigma/node-image'
 import Graph from 'graphology'
 import FA2Layout from 'graphology-layout-forceatlas2'
@@ -6,12 +6,39 @@ import Sigma from 'sigma'
 
 const emit = defineEmits(['nodeInfoUpdate'])
 
-const container = ref(null)
+const container = ref<HTMLDivElement | null>(null)
+
+interface Organization {
+  name: string | null
+  login: string
+  description: string | null
+  url: string
+  avatarUrl: string
+}
+
+interface Repository {
+  name: string
+  url: string
+  description: string | null
+}
+
+interface GitHubUser {
+  login: string
+  name: string | null
+  bio: string | null
+  avatarUrl: string
+  organizations: {
+    nodes: Organization[]
+  }
+  repositories: {
+    nodes: Repository[]
+  }
+}
 
 onMounted(async () => {
   const graph = new Graph()
 
-  async function fetchGitHubUser(login) {
+  async function fetchGitHubUser(login: string): Promise<GitHubUser | null> {
     const query = `
     query ($login: String!) {
       user(login: $login) {
@@ -41,14 +68,15 @@ onMounted(async () => {
   `
     const variables = { login }
 
-    const data = await $fetch('/api/github-ql', {
+    const data = await $fetch<{ user: GitHubUser | null }>('/api/github-ql', {
       method: 'POST',
       body: { query, variables },
     })
+
     return data.user
   }
 
-  const user = await fetchGitHubUser('norbiros')
+  const user = await fetchGitHubUser('yyx990803')
 
   if (user) {
     graph.addNode('user', {
@@ -61,7 +89,7 @@ onMounted(async () => {
       __typename: 'User',
     })
 
-    const orgs = user.organizations.nodes || []
+    const orgs = user.organizations?.nodes || []
     orgs.forEach((org, index) => {
       graph.addNode(`org${index}`, {
         size: 25,
@@ -75,7 +103,7 @@ onMounted(async () => {
       graph.addEdge(`org${index}`, 'user', { color: '#b29985' })
     })
 
-    const repos = user.repositories.nodes || []
+    const repos = user.repositories?.nodes || []
     repos.forEach((repo, index) => {
       graph.addNode(`repo${index}`, {
         size: 15,
@@ -108,29 +136,36 @@ onMounted(async () => {
       settings: layoutSettings,
     })
 
-    const renderer = new Sigma(graph, container.value, {
-      labelColor: { attribute: 'color', color: '#fffffe' },
-      defaultNodeType: 'image',
-      nodeProgramClasses: {
-        image: NodeImageProgram,
-      },
-    })
+    if (container.value) {
+      const renderer = new Sigma(graph, container.value, {
+        labelColor: { attribute: 'color', color: '#fffffe' },
+        defaultNodeType: 'image',
+        nodeProgramClasses: {
+          image: NodeImageProgram,
+        },
+      })
 
-    renderer.on('clickNode', ({ node }) => {
-      const url = graph.getNodeAttribute(node, 'url')
-      if (url)
-        window.open(url, '_blank')
-    })
+      renderer.on('clickNode', ({ node }) => {
+        const url = graph.getNodeAttribute(node, 'url')
+        if (url)
+          window.open(url, '_blank')
+      })
 
-    renderer.on('enterNode', ({ node }) => {
-      const label = graph.getNodeAttribute(node, 'label')
-      const description = graph.getNodeAttribute(node, 'description')
-      const typename = graph.getNodeAttribute(node, '__typename')
-      const url = graph.getNodeAttribute(node, 'url')
-      if (label && typename) {
-        emit('nodeInfoUpdate', { label, description: description || null, typename, url: url || null })
-      }
-    })
+      renderer.on('enterNode', ({ node }) => {
+        const label = graph.getNodeAttribute(node, 'label')
+        const description = graph.getNodeAttribute(node, 'description')
+        const typename = graph.getNodeAttribute(node, '__typename')
+        const url = graph.getNodeAttribute(node, 'url')
+        if (label && typename) {
+          emit('nodeInfoUpdate', {
+            label,
+            description: description || null,
+            typename,
+            url: url || null,
+          })
+        }
+      })
+    }
   }
 })
 </script>
