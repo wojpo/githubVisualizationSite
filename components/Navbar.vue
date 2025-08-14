@@ -4,6 +4,7 @@ const isMobileMenuOpen = ref(false)
 function toggleMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
+const { signIn } = useAuth()
 </script>
 
 <template>
@@ -11,9 +12,9 @@ function toggleMenu() {
     <nav class="sticky top-0 z-50">
       <div class="mt-2 mx-4 md:mx-10 flex items-center justify-between text-[#2E2E2E] font-inter text-lg md:text-xl font-semibold">
         <div class="flex items-center space-x-4 md:space-x-12">
-          <NuxtLink to="/">
+          <button>
             <img src="/img/logo.svg" alt="Logo">
-          </NuxtLink>
+          </button>
           <button class="md:hidden focus:outline-none mt-2" aria-label="Toggle menu" @click="toggleMenu">
             <Icon :name="isMobileMenuOpen ? 'mdi:close' : 'mdi:hamburger-menu'" size="36" />
           </button>
@@ -34,13 +35,16 @@ function toggleMenu() {
           </div>
         </div>
 
-        <NuxtLink to="/login">
+        <div
+          class="cursor-pointer
+" @click="signIn('github')"
+        >
           <div
             class="transition-all border-4 border-[#E76F51] px-6 py-1 rounded-3xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
           >
             Sign in
           </div>
-        </NuxtLink>
+        </div>
       </div>
 
       <div

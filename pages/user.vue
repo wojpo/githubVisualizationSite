@@ -5,7 +5,9 @@ interface InfoData {
   typename: string
   url?: string
 }
-
+definePageMeta({
+  auth: true,
+})
 const nodeInfo = ref<InfoData | null>(null)
 
 function updateNodeInfo(data: InfoData) {
