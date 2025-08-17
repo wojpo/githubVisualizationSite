@@ -4,6 +4,8 @@ const isMobileMenuOpen = ref(false)
 function toggleMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
+
+const { status, data, signIn } = useAuth()
 </script>
 
 <template>
@@ -19,46 +21,64 @@ function toggleMenu() {
           </button>
 
           <div class="hidden md:flex space-x-12">
+            <NuxtLink to="/users">
+              Users
+            </NuxtLink>
+            <NuxtLink to="/organizations">
+              Organizations
+            </NuxtLink>
+            <NuxtLink to="/example">
+              Example
+            </NuxtLink>
             <NuxtLink to="/faq">
               FAQ
-            </NuxtLink>
-            <NuxtLink to="/example">
-              Example
-            </NuxtLink>
-            <NuxtLink to="/example">
-              Example
-            </NuxtLink>
-            <NuxtLink to="/example">
-              Example
             </NuxtLink>
           </div>
         </div>
 
-        <NuxtLink to="/login">
+        <div v-if="status === 'authenticated' && data?.user" class="cursor-pointer">
+          <NuxtLink to="/profile">
+            <img
+              :src="data.user.image || '/img/default-avatar.png'"
+              alt="Profile"
+              class="w-12 h-12 rounded-full border-2 border-[#E76F51]"
+              :title="data.user.name || data.user.email || 'Profile'"
+            >
+          </NuxtLink>
+        </div>
+        <div v-else class="cursor-pointer" @click="signIn('github')">
           <div
             class="transition-all border-4 border-[#E76F51] px-6 py-1 rounded-3xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
           >
             Sign in
           </div>
-        </NuxtLink>
+        </div>
       </div>
 
       <div
         v-show="isMobileMenuOpen"
         class="md:hidden flex flex-col items-center text-[#2E2E2E] text-lg font-medium py-4 space-y-4 transition-all duration-200"
       >
+        <NuxtLink to="/users" @click="toggleMenu">
+          Users
+        </NuxtLink>
+        <NuxtLink to="/organizations" @click="toggleMenu">
+          Organizations
+        </NuxtLink>
+        <NuxtLink to="/example" @click="toggleMenu">
+          Example
+        </NuxtLink>
         <NuxtLink to="/faq" @click="toggleMenu">
           FAQ
         </NuxtLink>
-        <NuxtLink to="/example" @click="toggleMenu">
-          Example
-        </NuxtLink>
-        <NuxtLink to="/example" @click="toggleMenu">
-          Example
-        </NuxtLink>
-        <NuxtLink to="/example" @click="toggleMenu">
-          Example
-        </NuxtLink>
+        <div v-if="status === 'authenticated' && data?.user" @click="toggleMenu">
+          <NuxtLink to="/profile">
+            Profile
+          </NuxtLink>
+        </div>
+        <div v-else @click="signIn('github'); toggleMenu()">
+          Sign in
+        </div>
       </div>
 
       <div class="mt-2 border-b border-black" />

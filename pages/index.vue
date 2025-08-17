@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({
+  auth: false,
+})
+
+const { signIn, status } = useAuth()
 </script>
 
 <template>
@@ -7,17 +12,17 @@
       <h1>Visualize and Explore<br> Your <span class="text-[#E76F51]">GitHub Data</span></h1>
     </div>
     <div class="mt-12 mx-auto text-xl sm:text-2xl">
-      <NuxtLink to="/login">
-        <div
-          class="flex justify-between items-center transition-all border-4 border-[#E76F51] pl-[20px] pr-[14px] py-2 rounded-4xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
-        >
-          <p class=" text-left">
-            Sign in<br>
-            with Github
-          </p>
-          <img class="ml-5 w-14 sm:w-16" width="65" src="/img/github-logo-dark.svg" alt="github-logo">
-        </div>
-      </NuxtLink>
+      <div
+        v-if="status !== 'authenticated'"
+        class="cursor-pointer flex justify-between items-center transition-all border-4 border-[#E76F51] pl-[20px] pr-[14px] py-2 rounded-4xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
+        @click="signIn('github')"
+      >
+        <span class=" text-left">
+          Sign in<br>
+          with Github
+        </span>
+        <img class="ml-5 w-14 sm:w-16" width="65" src="/img/github-logo-dark.svg" alt="github-logo">
+      </div>
     </div>
     <div class="mx-auto mt-15 border border-[#2E2E2E] rounded-2xl shadow-lg h-[60vh] w-[90vw] sm:h-[90vh] sm:w-[70vw]">
       <ShowcaseChart class="w-full h-full" />

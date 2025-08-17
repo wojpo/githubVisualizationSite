@@ -1,6 +1,15 @@
-export default defineEventHandler(async (event) => {
-  const body = await readBody<{ query: string, variables?: Record<string, any> }>(event)
+import { getServerSession } from '#auth'
 
+export default defineEventHandler(async (event) => {
+  const session = await getServerSession(event)
+  if (!session?.user?.githubAccessToken) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized: No GitHub access token',
+    })
+  }
+
+  const body = await readBody<{ query: string, variables?: Record<string, any> }>(event)
   if (!body?.query) {
     throw createError({
       statusCode: 400,
@@ -8,18 +17,11 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const config = useRuntimeConfig()
-  const apikey = config.githubApiKey
-
-  if (!apikey) {
-    throw new Error('Missing GitHub API key. Please set the "githubApiKey" environment variable in the runtime configuration.')
-  }
-
   const response = await fetch('https://api.github.com/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apikey}`,
+      'Authorization': `Bearer ${session.user.githubAccessToken}`,
     },
     body: JSON.stringify({
       query: body.query,
