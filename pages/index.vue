@@ -3,7 +3,7 @@ definePageMeta({
   auth: false,
 })
 
-const { signIn } = useAuth()
+const { signIn, status } = useAuth()
 </script>
 
 <template>
@@ -13,6 +13,7 @@ const { signIn } = useAuth()
     </div>
     <div class="mt-12 mx-auto text-xl sm:text-2xl">
       <div
+        v-if="status !== 'authenticated'"
         class="cursor-pointer flex justify-between items-center transition-all border-4 border-[#E76F51] pl-[20px] pr-[14px] py-2 rounded-4xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
         @click="signIn('github')"
       >
