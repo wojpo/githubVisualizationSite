@@ -11,7 +11,7 @@ export default NuxtAuthHandler({
       clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: 'read:user user:email repo',
+          scope: 'read:user user:email repo read:org',
         },
       },
     }),
@@ -19,11 +19,7 @@ export default NuxtAuthHandler({
   callbacks: {
     async session({ session, token }) {
       session.user = session.user || {}
-      // eslint-disable-next-line ts/ban-ts-comment
-      // @ts-expect-error
       session.user.id = token.sub
-      // eslint-disable-next-line ts/ban-ts-comment
-      // @ts-expect-error
       session.user.githubAccessToken = token.access_token
       return session
     },
