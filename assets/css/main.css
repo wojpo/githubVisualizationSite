@@ -10,6 +10,15 @@ body {
 @theme static {
   --font-inter: 'Inter', sans-serif;
   --navbar-height: 67px;
+  --color-primary: #e76f51;
+  --color-secondary: #b29985;
+  --color-bg: #fffaf0;
+  --color-blackly: #2e2e2e;
+
+  --color-primary-DEFAULT: var(--color-primary);
+  --color-secondary-DEFAULT: var(--color-secondary);
+  --color-bg-DEFAULT: var(--color-bg);
+  --color-blackly-DEFAULT: var(--color-blackly);
 }
 
 @utility screen-navbar {
