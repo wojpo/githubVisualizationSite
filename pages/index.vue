@@ -7,14 +7,14 @@ const { signIn, status } = useAuth()
 </script>
 
 <template>
-  <div class="flex flex-col text-[#2E2E2E] font-inter px-4 sm:px-8">
+  <div class="flex flex-col text-blackly font-inter px-4 sm:px-8">
     <div class="mt-20 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center max-w-3xl mx-auto">
-      <h1>Visualize and Explore<br> Your <span class="text-[#E76F51]">GitHub Data</span></h1>
+      <h1>Visualize and Explore<br> Your <span class="text-primary">GitHub Data</span></h1>
     </div>
     <div class="mt-12 mx-auto text-xl sm:text-2xl">
       <div
         v-if="status !== 'authenticated'"
-        class="cursor-pointer flex justify-between items-center transition-all border-4 border-[#E76F51] pl-[20px] pr-[14px] py-2 rounded-4xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
+        class="cursor-pointer flex justify-between items-center transition-all border-4 border-primary pl-[20px] pr-[14px] py-2 rounded-4xl bg-primary text-bg hover:bg-bg hover:text-primary"
         @click="signIn('github')"
       >
         <span class=" text-left">
@@ -24,7 +24,7 @@ const { signIn, status } = useAuth()
         <img class="ml-5 w-14 sm:w-16" width="65" src="/img/github-logo-dark.svg" alt="github-logo">
       </div>
     </div>
-    <div class="mx-auto mt-15 border border-[#2E2E2E] rounded-2xl shadow-lg h-[60vh] w-[90vw] sm:h-[90vh] sm:w-[70vw]">
+    <div class="mx-auto mt-15 border border-blackly rounded-2xl shadow-lg h-[60vh] w-[90vw] sm:h-[90vh] sm:w-[70vw]">
       <ShowcaseChart class="w-full h-full" />
     </div>
     <div class="mt-25" />

@@ -2,7 +2,6 @@
 import { NodeImageProgram } from '@sigma/node-image'
 import Graph from 'graphology'
 import Sigma from 'sigma'
-import { onMounted, ref } from 'vue'
 
 const container = ref<HTMLDivElement | null>(null)
 
@@ -15,7 +14,7 @@ onMounted(async () => {
   const graph = Graph.from(graphData)
 
   const renderer = new Sigma(graph, container.value, {
-    labelColor: { attribute: 'color', color: '#fffffe' },
+    labelColor: { attribute: 'color', color: '#000000' },
     defaultNodeType: 'image',
     nodeProgramClasses: {
       image: NodeImageProgram,

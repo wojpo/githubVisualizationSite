@@ -11,7 +11,7 @@ const { status, data, signIn } = useAuth()
 <template>
   <div>
     <nav class="sticky top-0 z-50">
-      <div class="mt-2 mx-4 md:mx-10 flex items-center justify-between text-[#2E2E2E] font-inter text-lg md:text-xl font-semibold">
+      <div class="mt-2 mx-4 md:mx-10 flex items-center justify-between text-blackly font-inter text-lg md:text-xl font-semibold">
         <div class="flex items-center space-x-4 md:space-x-12">
           <NuxtLink to="/">
             <img src="/img/logo.svg" alt="Logo">
@@ -41,14 +41,14 @@ const { status, data, signIn } = useAuth()
             <img
               :src="data.user.image || '/img/default-avatar.png'"
               alt="Profile"
-              class="w-12 h-12 rounded-full border-2 border-[#E76F51]"
+              class="w-12 h-12 rounded-full border-2 border-primary"
               :title="data.user.name || data.user.email || 'Profile'"
             >
           </NuxtLink>
         </div>
         <div v-else class="cursor-pointer" @click="signIn('github')">
           <div
-            class="transition-all border-4 border-[#E76F51] px-6 py-1 rounded-3xl bg-[#E76F51] text-[#fffaf0] hover:bg-[#fffaf0] hover:text-[#E76F51]"
+            class="transition-all border-4 border-primary px-6 py-1 rounded-3xl bg-primary text-bg hover:bg-bg hover:text-primary"
           >
             Sign in
           </div>
@@ -57,7 +57,7 @@ const { status, data, signIn } = useAuth()
 
       <div
         v-show="isMobileMenuOpen"
-        class="md:hidden flex flex-col items-center text-[#2E2E2E] text-lg font-medium py-4 space-y-4 transition-all duration-200"
+        class="md:hidden flex flex-col items-center text-blackly text-lg font-medium py-4 space-y-4 transition-all duration-200"
       >
         <NuxtLink to="/users" @click="toggleMenu">
           Users
