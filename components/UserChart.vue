@@ -45,6 +45,8 @@ interface GitHubUser {
   }
 }
 
+const toggleVisibility = ref<(typename: string) => void>()
+
 onMounted(async () => {
   const graph = new Graph()
 
@@ -97,6 +99,7 @@ onMounted(async () => {
       image: user.avatarUrl,
       url: `https://github.com/${user.login}`,
       __typename: 'User',
+      hidden: false,
     })
 
     const orgs = user.organizations?.nodes || []
@@ -109,6 +112,7 @@ onMounted(async () => {
         description: org.description || 'No description',
         url: org.url,
         __typename: 'Organization',
+        hidden: false,
       })
       graph.addEdge(`org${index}`, 'user', { color: secondaryColor })
     })
@@ -122,6 +126,7 @@ onMounted(async () => {
         description: repo.description || 'No description',
         color: primaryColor,
         __typename: 'Repository',
+        hidden: false,
       })
       graph.addEdge(`repo${index}`, 'user', { color: secondaryColor })
     })
@@ -155,6 +160,13 @@ onMounted(async () => {
         },
       })
 
+      toggleVisibility.value = (typename: string) => {
+        const nodesToChange = graph.filterNodes((node, attrs) => attrs.__typename === typename)
+        nodesToChange.forEach((node) => {
+          graph.setNodeAttribute(node, 'hidden', !graph.getNodeAttribute(node, 'hidden'))
+        })
+      }
+
       renderer.on('clickNode', ({ node }) => {
         const url = graph.getNodeAttribute(node, 'url')
         if (url)
@@ -181,5 +193,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div ref="container" />
+  <div ref="container" class="flex justify-end items-end flex-col">
+    <div class="text-blackly text-right z-10 flex flex-col gap-2 mb-5 mr-5">
+      <button @click="toggleVisibility!('Repository')">
+        Repositories
+      </button>
+      <button @click="toggleVisibility!('Organization')">
+        Organizations
+      </button>
+    </div>
+  </div>
 </template>
