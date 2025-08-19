@@ -39,7 +39,7 @@ const { status, data, signIn } = useAuth()
         <div v-if="status === 'authenticated' && data?.user" class="cursor-pointer">
           <NuxtLink to="/profile">
             <img
-              :src="data.user.image || '/img/default-avatar.png'"
+              :src="data.user.image || '/img/logo.svg'"
               alt="Profile"
               class="w-12 h-12 rounded-full border-2 border-primary"
               :title="data.user.name || data.user.email || 'Profile'"

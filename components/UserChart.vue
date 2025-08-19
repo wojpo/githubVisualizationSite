@@ -4,6 +4,8 @@ import Graph from 'graphology'
 import FA2Layout from 'graphology-layout-forceatlas2'
 import Sigma from 'sigma'
 
+const { username } = defineProps<{ username: string }>()
+
 const emit = defineEmits(['nodeInfoUpdate'])
 
 const container = ref<HTMLDivElement | null>(null)
@@ -84,7 +86,7 @@ onMounted(async () => {
     return data.user
   }
 
-  const user = await fetchGitHubUser('yyx990803')
+  const user = await fetchGitHubUser(username)
 
   if (user) {
     graph.addNode('user', {
