@@ -5,12 +5,19 @@ interface InfoData {
   typename: string
   url?: string
 }
+
+const route = useRoute('user-id')
+const userId = route.params.id
+
 definePageMeta({
   auth: true,
 })
 const nodeInfo = ref<InfoData | null>(null)
 
-const login = 'wojpo'
+function userNotFound() {
+  const toast = useToast()
+  toast.add({ title: 'Error!', description: 'User does not exist.', color: 'error' })
+}
 
 function updateNodeInfo(data: InfoData) {
   nodeInfo.value = data
@@ -20,6 +27,6 @@ function updateNodeInfo(data: InfoData) {
 <template>
   <div class="flex screen-navbar">
     <NodeInfoPanel class="max-md:hidden" :node-info="nodeInfo" />
-    <UserChart :username="login" class="w-3/4 h-full" @node-info-update="updateNodeInfo" />
+    <UserChart :username="userId.toString()" class="max-md:w-full w-3/4 h-full" @user-not-found="userNotFound" @node-info-update="updateNodeInfo" />
   </div>
 </template>
