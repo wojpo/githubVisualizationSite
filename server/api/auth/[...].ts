@@ -38,7 +38,7 @@ export default NuxtAuthHandler({
     async jwt({ token, account, profile }) {
       if (account && profile) {
         token.access_token = account.access_token
-        token.githubUsername = (profile as any).login
+        token.githubUsername = (profile as GitHubProfile).login
       }
       return token
     },
