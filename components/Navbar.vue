@@ -13,15 +13,15 @@ const { status, data, signIn } = useAuth()
     <nav class="sticky top-0 z-50">
       <div class="mt-2 mx-4 md:mx-10 flex items-center justify-between text-blackly font-inter text-lg md:text-xl font-semibold">
         <div class="flex items-center space-x-4 md:space-x-12">
-          <NuxtLink to="/">
+          <a href="/">
             <img src="/img/logo.svg" alt="Logo">
-          </NuxtLink>
+          </a>
           <button class="md:hidden focus:outline-none mt-2" aria-label="Toggle menu" @click="toggleMenu">
             <Icon :name="isMobileMenuOpen ? 'mdi:close' : 'mdi:hamburger-menu'" size="36" />
           </button>
 
           <div class="hidden md:flex space-x-12">
-            <NuxtLink to="/users">
+            <NuxtLink to="/user">
               Users
             </NuxtLink>
             <NuxtLink to="/organizations">
@@ -37,14 +37,14 @@ const { status, data, signIn } = useAuth()
         </div>
 
         <div v-if="status === 'authenticated' && data?.user" class="cursor-pointer">
-          <NuxtLink to="/profile">
+          <a :href="`/user/${data.user.githubUsername}`">
             <img
-              :src="data.user.image || '/img/default-avatar.png'"
+              :src="data.user.image || '/img/logo.svg'"
               alt="Profile"
               class="w-12 h-12 rounded-full border-2 border-primary"
-              :title="data.user.name || data.user.email || 'Profile'"
+              :title="data.user.githubUsername || data.user.email || 'Profile'"
             >
-          </NuxtLink>
+          </a>
         </div>
         <div v-else class="cursor-pointer" @click="signIn('github')">
           <div
