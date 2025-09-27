@@ -30,6 +30,7 @@
     "@nuxt/devtools": "2.5.0",
     "@nuxt/eslint": "1.4.1",
     "@sidebase/nuxt-auth": "^1.0.1",
+    "@types/node": "^24.5.2",
     "eslint": "^9.30.0",
     "eslint-plugin-format": "~1.0.1",
     "tailwindcss": "^4.1.11",
