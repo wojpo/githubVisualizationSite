@@ -2,7 +2,7 @@
 const faqs = [
   {
     label: 'Why this project was made?',
-    content: 'This project was built during the Summer of Making as a way to create something fun. I wanted to combine learning with building a tool that helps visualize GitHub contributions and makes cool graphs with them.',
+    content: 'This project was built during the Summer of Making as a way to create something fun. I wanted to combine learning with building a tool that helps visualize GitHub data and makes cool graphs with it.',
   },
   {
     label: 'How do I log in?',
@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     label: 'What permissions does the app request from my GitHub account?',
-    content: 'The app requests read-only access to your repositories and contribution data. No write access is required.',
+    content: 'The app requests read-only access to your repositories, organizations and contribution data. No write access is required.',
   },
   {
     label: 'Do you store my GitHub credentials?',
@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     label: 'Which technologies power this app?',
-    content: 'The app is built with Nuxt 3, TailwindCSS, and the GitHub API for fetching contribution data.',
+    content: 'The app is built with Nuxt 3, TailwindCSS, and the GitHub API for fetching github data.',
   },
 ]
 </script>
@@ -49,4 +49,5 @@ const faqs = [
       </section>
     </main>
   </div>
+  <Footer />
 </template>
