@@ -24,12 +24,6 @@ const { status, data, signIn } = useAuth()
             <NuxtLink to="/user">
               Users
             </NuxtLink>
-            <NuxtLink to="/organizations">
-              Organizations
-            </NuxtLink>
-            <NuxtLink to="/example">
-              Example
-            </NuxtLink>
             <NuxtLink to="/faq">
               FAQ
             </NuxtLink>
@@ -59,29 +53,15 @@ const { status, data, signIn } = useAuth()
         v-show="isMobileMenuOpen"
         class="md:hidden flex flex-col items-center text-blackly text-lg font-medium py-4 space-y-4 transition-all duration-200"
       >
-        <NuxtLink to="/users" @click="toggleMenu">
+        <NuxtLink to="/user" @click="toggleMenu">
           Users
-        </NuxtLink>
-        <NuxtLink to="/organizations" @click="toggleMenu">
-          Organizations
-        </NuxtLink>
-        <NuxtLink to="/example" @click="toggleMenu">
-          Example
         </NuxtLink>
         <NuxtLink to="/faq" @click="toggleMenu">
           FAQ
         </NuxtLink>
-        <div v-if="status === 'authenticated' && data?.user" @click="toggleMenu">
-          <NuxtLink to="/profile">
-            Profile
-          </NuxtLink>
-        </div>
-        <div v-else @click="signIn('github'); toggleMenu()">
-          Sign in
-        </div>
       </div>
 
-      <div class="mt-2 border-b border-black" />
+      <div class="mt-2 border-b border-blackly" />
     </nav>
   </div>
 </template>
