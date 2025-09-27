@@ -23,6 +23,6 @@ const { signIn, status } = useAuth()
     <div class="mx-auto mt-15 border border-blackly rounded-2xl shadow-lg h-[60vh] w-[90vw] sm:h-[90vh] sm:w-[70vw]">
       <ShowcaseChart class="w-full h-full" />
     </div>
-    <div class="mt-25" />
   </div>
+  <Footer />
 </template>
