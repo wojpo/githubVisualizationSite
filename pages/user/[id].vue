@@ -10,14 +10,10 @@ const route = useRoute('user-id')
 const userId = route.params.id
 
 definePageMeta({
-  auth: true,
+  middleware: ['check-github-user'],
 })
-const nodeInfo = ref<InfoData | null>(null)
 
-function userNotFound() {
-  const toast = useToast()
-  toast.add({ title: 'Error!', description: 'User does not exist.', color: 'error' })
-}
+const nodeInfo = ref<InfoData | null>(null)
 
 function updateNodeInfo(data: InfoData) {
   nodeInfo.value = data
@@ -27,6 +23,6 @@ function updateNodeInfo(data: InfoData) {
 <template>
   <div class="flex screen-navbar">
     <NodeInfoPanel class="max-md:hidden" :node-info="nodeInfo" />
-    <UserChart :username="userId.toString()" class="max-md:w-full w-3/4 h-full" @user-not-found="userNotFound" @node-info-update="updateNodeInfo" />
+    <UserChart :username="userId.toString()" class="max-md:w-full w-3/4 h-full" @node-info-update="updateNodeInfo" />
   </div>
 </template>
