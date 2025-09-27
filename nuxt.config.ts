@@ -22,7 +22,7 @@ export default defineNuxtConfig({
       addDefaultCallbackUrl: true,
     },
     enableGlobalAppMiddleware: false, // Disable global middleware to control auth per page
-    origin: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:3000', // Base URL for production/local
+    baseURL: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:3000', // Base URL for production/local
   },
   runtimeConfig: {
     public: {

@@ -6,6 +6,9 @@ function searchUser() {
     return reloadNuxtApp({ path: `/user/${username.value.trim()}` })
   }
 }
+definePageMeta({
+  middleware: ['github-auth'],
+})
 </script>
 
 <template>

@@ -10,7 +10,7 @@ const route = useRoute('user-id')
 const userId = route.params.id
 
 definePageMeta({
-  middleware: ['check-github-user'],
+  middleware: ['check-github-user', 'github-auth'],
 })
 
 const nodeInfo = ref<InfoData | null>(null)
