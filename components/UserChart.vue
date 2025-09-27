@@ -6,7 +6,7 @@ import Sigma from 'sigma'
 
 const { username } = defineProps<{ username: string }>()
 
-const emit = defineEmits(['nodeInfoUpdate', 'userNotFound'])
+const emit = defineEmits(['nodeInfoUpdate'])
 
 const container = ref<HTMLDivElement | null>(null)
 
@@ -87,110 +87,107 @@ onMounted(async () => {
 
     return data.user
   }
-  try {
-    const user = await fetchGitHubUser(username)
 
-    if (user) {
-      graph.addNode('user', {
-        size: 30,
-        label: user.name || user.login,
+  const user = await fetchGitHubUser(username)
+
+  if (user) {
+    graph.addNode('user', {
+      size: 30,
+      label: user.name || user.login,
+      color: primaryColor,
+      description: user.bio || 'No bio',
+      image: user.avatarUrl,
+      url: `https://github.com/${user.login}`,
+      __typename: 'User',
+      hidden: false,
+    })
+
+    const orgs = user.organizations?.nodes || []
+    orgs.forEach((org, index) => {
+      graph.addNode(`org${index}`, {
+        size: 25,
+        label: org.name || org.login,
         color: primaryColor,
-        description: user.bio || 'No bio',
-        image: user.avatarUrl,
-        url: `https://github.com/${user.login}`,
-        __typename: 'User',
+        image: org.avatarUrl,
+        description: org.description || 'No description',
+        url: org.url,
+        __typename: 'Organization',
         hidden: false,
       })
+      graph.addEdge(`org${index}`, 'user', { color: secondaryColor })
+    })
 
-      const orgs = user.organizations?.nodes || []
-      orgs.forEach((org, index) => {
-        graph.addNode(`org${index}`, {
-          size: 25,
-          label: org.name || org.login,
-          color: primaryColor,
-          image: org.avatarUrl,
-          description: org.description || 'No description',
-          url: org.url,
-          __typename: 'Organization',
-          hidden: false,
+    const repos = user.repositories?.nodes || []
+    repos.forEach((repo, index) => {
+      graph.addNode(`repo${index}`, {
+        size: 15,
+        label: repo.name,
+        url: repo.url,
+        description: repo.description || 'No description',
+        color: primaryColor,
+        __typename: 'Repository',
+        hidden: false,
+      })
+      graph.addEdge(`repo${index}`, 'user', { color: secondaryColor })
+    })
+
+    // Sigma requires nodes to have initial x and y values to render properly. These will be replaced by the ForceAtlas2 layout afterward.
+    graph.forEachNode((node) => {
+      graph.setNodeAttribute(node, 'x', Math.random())
+      graph.setNodeAttribute(node, 'y', Math.random())
+    })
+
+    const layoutSettings = {
+      gravity: 2,
+      scalingRatio: 10,
+      edgeWeightInfluence: 0.7,
+      strongGravityMode: true,
+      adjustSizes: true,
+      barnesHutOptimize: true,
+    }
+
+    FA2Layout.assign(graph, {
+      iterations: 200,
+      settings: layoutSettings,
+    })
+
+    if (container.value) {
+      const renderer = new Sigma(graph, container.value, {
+        labelColor: { attribute: 'color', color: primaryColor },
+        defaultNodeType: 'image',
+        nodeProgramClasses: {
+          image: NodeImageProgram,
+        },
+      })
+
+      toggleVisibility.value = (typename: string) => {
+        const nodesToChange = graph.filterNodes((node, attrs) => attrs.__typename === typename)
+        nodesToChange.forEach((node) => {
+          graph.setNodeAttribute(node, 'hidden', !graph.getNodeAttribute(node, 'hidden'))
         })
-        graph.addEdge(`org${index}`, 'user', { color: secondaryColor })
-      })
-
-      const repos = user.repositories?.nodes || []
-      repos.forEach((repo, index) => {
-        graph.addNode(`repo${index}`, {
-          size: 15,
-          label: repo.name,
-          url: repo.url,
-          description: repo.description || 'No description',
-          color: primaryColor,
-          __typename: 'Repository',
-          hidden: false,
-        })
-        graph.addEdge(`repo${index}`, 'user', { color: secondaryColor })
-      })
-
-      // Sigma requires nodes to have initial x and y values to render properly. These will be replaced by the ForceAtlas2 layout afterward.
-      graph.forEachNode((node) => {
-        graph.setNodeAttribute(node, 'x', Math.random())
-        graph.setNodeAttribute(node, 'y', Math.random())
-      })
-
-      const layoutSettings = {
-        gravity: 2,
-        scalingRatio: 10,
-        edgeWeightInfluence: 0.7,
-        strongGravityMode: true,
-        adjustSizes: true,
-        barnesHutOptimize: true,
       }
 
-      FA2Layout.assign(graph, {
-        iterations: 200,
-        settings: layoutSettings,
+      renderer.on('clickNode', ({ node }) => {
+        const url = graph.getNodeAttribute(node, 'url')
+        if (url)
+          window.open(url, '_blank')
       })
 
-      if (container.value) {
-        const renderer = new Sigma(graph, container.value, {
-          labelColor: { attribute: 'color', color: primaryColor },
-          defaultNodeType: 'image',
-          nodeProgramClasses: {
-            image: NodeImageProgram,
-          },
-        })
-
-        toggleVisibility.value = (typename: string) => {
-          const nodesToChange = graph.filterNodes((node, attrs) => attrs.__typename === typename)
-          nodesToChange.forEach((node) => {
-            graph.setNodeAttribute(node, 'hidden', !graph.getNodeAttribute(node, 'hidden'))
+      renderer.on('enterNode', ({ node }) => {
+        const label = graph.getNodeAttribute(node, 'label')
+        const description = graph.getNodeAttribute(node, 'description')
+        const typename = graph.getNodeAttribute(node, '__typename')
+        const url = graph.getNodeAttribute(node, 'url')
+        if (label && typename) {
+          emit('nodeInfoUpdate', {
+            label,
+            description: description || null,
+            typename,
+            url: url || null,
           })
         }
-
-        renderer.on('clickNode', ({ node }) => {
-          const url = graph.getNodeAttribute(node, 'url')
-          if (url)
-            window.open(url, '_blank')
-        })
-
-        renderer.on('enterNode', ({ node }) => {
-          const label = graph.getNodeAttribute(node, 'label')
-          const description = graph.getNodeAttribute(node, 'description')
-          const typename = graph.getNodeAttribute(node, '__typename')
-          const url = graph.getNodeAttribute(node, 'url')
-          if (label && typename) {
-            emit('nodeInfoUpdate', {
-              label,
-              description: description || null,
-              typename,
-              url: url || null,
-            })
-          }
-        })
-      }
+      })
     }
-  } catch {
-    emit('userNotFound')
   }
 })
 </script>

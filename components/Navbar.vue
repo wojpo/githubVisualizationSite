@@ -27,9 +27,6 @@ const { status, data, signIn } = useAuth()
             <NuxtLink to="/organizations">
               Organizations
             </NuxtLink>
-            <NuxtLink to="/example">
-              Example
-            </NuxtLink>
             <NuxtLink to="/faq">
               FAQ
             </NuxtLink>
