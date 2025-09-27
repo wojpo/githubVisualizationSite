@@ -2,7 +2,7 @@
 const faqs = [
   {
     label: 'Why this project was made?',
-    content: 'This project was built during the Summer of Making as a way to create something fun. I wanted to combine learning with building a tool that helps visualize GitHub contributions and makes cool graphs with them.'
+    content: 'This project was built during the Summer of Making as a way to create something fun. I wanted to combine learning with building a tool that helps visualize GitHub contributions and makes cool graphs with them.',
   },
   {
     label: 'How do I log in?',
@@ -24,12 +24,12 @@ const faqs = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-[var(--color-bg)] text-[var(--color-blackly)] font-inter">
+  <div class="min-h-screen bg-bg text-blackly font-inter">
     <header class="py-10 text-center">
-      <h1 class="text-4xl font-bold text-[var(--color-primary)]">
+      <h1 class="text-4xl font-bold text-primary">
         FAQ
       </h1>
-      <p class="text-lg text-[var(--color-secondary)] mt-2">
+      <p class="text-lg text-secondary mt-2">
         Frequently asked questions
       </p>
     </header>
@@ -38,12 +38,12 @@ const faqs = [
       <section
         v-for="(faq, index) in faqs"
         :key="index"
-        class="bg-[var(--color-bg)] rounded-2xl shadow p-6 transition hover:shadow-lg"
+        class="bg-bg rounded-2xl shadow p-6 transition hover:shadow-lg"
       >
-        <h2 class="text-xl font-semibold text-[var(--color-primary)]">
+        <h2 class="text-xl font-semibold text-primary">
           {{ faq.label }}
         </h2>
-        <p class="mt-2 text-base text-[var(--color-blackly)]">
+        <p class="mt-2 text-base text-blackly]">
           {{ faq.content }}
         </p>
       </section>
