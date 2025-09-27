@@ -31,4 +31,15 @@ export default defineNuxtConfig({
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     AUTH_SECRET: process.env.NUXT_AUTH_SECRET,
   },
+  app: {
+    head: {
+      title: 'GitHub Visualization Site',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
+    },
+  },
 })
