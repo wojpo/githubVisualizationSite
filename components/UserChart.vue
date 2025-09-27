@@ -88,7 +88,13 @@ onMounted(async () => {
     return data.user
   }
 
-  const user = await fetchGitHubUser(username)
+  let user: GitHubUser | null = null
+  try {
+    user = await fetchGitHubUser(username)
+  } catch (error) {
+    console.error('Failed to fetch GitHub user:', error)
+    return
+  }
 
   if (user) {
     graph.addNode('user', {
