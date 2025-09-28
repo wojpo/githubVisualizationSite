@@ -17,7 +17,7 @@ Log in with **GitHub OAuth** and generate a graph where nodes represent:
 - 🔐 Login with **GitHub OAuth**  
 - 🧑‍💻 Visualize your repositories and organizations  
 - 🔍 Explore graphs of other GitHub users  
-- 🌐 Interactive graphs (pan, zoom, drag nodes)  
+- 🌐 Interactive graphs
 - 📈 A fun way to explore open-source networks  
 
 ---
