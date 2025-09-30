@@ -7,11 +7,11 @@ interface InfoData {
 }
 
 const route = useRoute('user-id')
-const userId = route.params.id
+const organizationId = route.params.id
 
 definePageMeta({
   middleware: ['check-github-existence', 'github-auth'],
-  entityType: 'user',
+  entityType: 'organization',
 })
 
 const nodeInfo = ref<InfoData | null>(null)
@@ -24,6 +24,6 @@ function updateNodeInfo(data: InfoData) {
 <template>
   <div class="flex screen-navbar">
     <NodeInfoPanel class="max-lg:hidden" :node-info="nodeInfo" />
-    <UserGraph :username="userId.toString()" class="max-lg:w-full w-3/4 h-full" @node-info-update="updateNodeInfo" />
+    <OrganizationGraph :org-name="organizationId.toString()" class="max-lg:w-full w-3/4 h-full" @node-info-update="updateNodeInfo" />
   </div>
 </template>

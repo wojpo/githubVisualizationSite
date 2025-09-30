@@ -24,6 +24,9 @@ const { status, data, signIn } = useAuth()
             <NuxtLink to="/user">
               Users
             </NuxtLink>
+            <NuxtLink to="/organization">
+              Organizations
+            </NuxtLink>
             <NuxtLink to="/faq">
               FAQ
             </NuxtLink>
@@ -55,6 +58,9 @@ const { status, data, signIn } = useAuth()
       >
         <NuxtLink to="/user" @click="toggleMenu">
           Users
+        </NuxtLink>
+        <NuxtLink to="/organization">
+          Organizations
         </NuxtLink>
         <NuxtLink to="/faq" @click="toggleMenu">
           FAQ

@@ -12,7 +12,7 @@ const year = new Date().getFullYear()
             <span class="font-bold text-2xl text-primary">GitHub Visualization Site</span>
           </a>
           <p class="text-center md:text-left text-base text-blackly/80 max-w-xs">
-            Instantly search and visualize any GitHub profile.
+            Instantly search and visualize any GitHub profile or organization.
           </p>
         </div>
       </div>

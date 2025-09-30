@@ -26,7 +26,7 @@ defineProps<{
       </h1>
       <span
         v-if="nodeInfo?.typename"
-        class="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full font-medium max-w-min overflow-hidden text-ellipsis"
+        class="bg-primary/10 text-primary mt-1.5 text-sm px-3 py-1 rounded-full font-medium max-w-min overflow-hidden text-ellipsis"
       >
         {{ nodeInfo.typename }}
       </span>
