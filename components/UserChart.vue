@@ -47,6 +47,11 @@ interface GitHubUser {
 
 const toggleVisibility = ref<(typename: string) => void>()
 
+const visibility = reactive<{ [key: string]: boolean }>({
+  Repository: true,
+  Organization: true,
+})
+
 onMounted(async () => {
   const graph = new Graph()
 
@@ -167,6 +172,7 @@ onMounted(async () => {
       })
 
       toggleVisibility.value = (typename: string) => {
+        visibility[typename] = !visibility[typename]
         const nodesToChange = graph.filterNodes((node, attrs) => attrs.__typename === typename)
         nodesToChange.forEach((node) => {
           graph.setNodeAttribute(node, 'hidden', !graph.getNodeAttribute(node, 'hidden'))
@@ -200,13 +206,15 @@ onMounted(async () => {
 
 <template>
   <div ref="container" class="flex justify-end items-end flex-col">
-    <div class="text-blackly text-right z-10 flex flex-col gap-2 mb-5 mr-5">
-      <button @click="toggleVisibility!('Repository')">
-        Repositories
-      </button>
-      <button @click="toggleVisibility!('Organization')">
-        Organizations
-      </button>
+    <div class="text-blackly text-right z-10 flex flex-col gap-2 mb-5 mr-5 ">
+      <NodeVisibilityToggleBtn
+        v-for="(isVisible, type) in visibility"
+        :key="type"
+        :visible="isVisible"
+        @click="toggleVisibility!(type as string)"
+      >
+        {{ type }}
+      </NodeVisibilityToggleBtn>
     </div>
   </div>
 </template>
