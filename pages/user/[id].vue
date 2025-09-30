@@ -22,7 +22,7 @@ function updateNodeInfo(data: InfoData) {
 
 <template>
   <div class="flex screen-navbar">
-    <NodeInfoPanel class="max-md:hidden" :node-info="nodeInfo" />
-    <UserChart :username="userId.toString()" class="max-md:w-full w-3/4 h-full" @node-info-update="updateNodeInfo" />
+    <NodeInfoPanel class="max-lg:hidden" :node-info="nodeInfo" />
+    <UserChart :username="userId.toString()" class="max-lg:w-full w-3/4 h-full" @node-info-update="updateNodeInfo" />
   </div>
 </template>
