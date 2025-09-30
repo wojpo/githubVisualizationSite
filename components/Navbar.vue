@@ -59,7 +59,7 @@ const { status, data, signIn } = useAuth()
         <NuxtLink to="/user" @click="toggleMenu">
           Users
         </NuxtLink>
-        <NuxtLink to="/organization">
+        <NuxtLink to="/organization" @click="toggleMenu">
           Organizations
         </NuxtLink>
         <NuxtLink to="/faq" @click="toggleMenu">

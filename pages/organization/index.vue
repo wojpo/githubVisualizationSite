@@ -7,7 +7,7 @@ definePageMeta({
 <template>
   <SearchForm
     heading="Search"
-    description="for any GitHub organization and visualize it repositories instantly."
+    description="for any GitHub organization and visualize its repositories instantly."
     placeholder="Enter GitHub organization name..."
     button-text="Search"
     search-path="/organization"

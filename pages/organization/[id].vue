@@ -6,7 +6,7 @@ interface InfoData {
   url?: string
 }
 
-const route = useRoute('user-id')
+const route = useRoute('organization-id')
 const organizationId = route.params.id
 
 definePageMeta({
