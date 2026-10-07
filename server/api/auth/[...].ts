@@ -18,6 +18,7 @@ export default NuxtAuthHandler({
     GithubProvider.default({
       clientId: runtimeConfig.public.GITHUB_CLIENT_ID,
       clientSecret: runtimeConfig.GITHUB_CLIENT_SECRET,
+      issuer: 'https://github.com/login/oauth',
       authorization: {
         params: {
           scope: 'read:user user:email repo read:org',
