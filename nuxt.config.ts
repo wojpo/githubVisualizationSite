@@ -21,7 +21,9 @@ export default defineNuxtConfig({
       defaultProvider: 'github',
       addDefaultCallbackUrl: true,
     },
-    enableGlobalAppMiddleware: false, // Disable global middleware to control auth per page
+    globalAppMiddleware: {
+      isEnabled: false,
+    },
     baseURL: process.env.NUXT_AUTH_ORIGIN || 'http://localhost:3000/api/auth',
   },
   runtimeConfig: {
